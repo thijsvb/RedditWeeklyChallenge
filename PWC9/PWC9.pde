@@ -52,8 +52,8 @@ void draw() {
     point(width*3/4 + i, random(550, 600));
   }
   fill(0);
-  text("Range: " + r, width/8, 550);
-  text("Number: "+ number, width*3/8, 550);
+  text("Range: " + nf(r), width/8, 550);
+  text("Number: "+ nf(number), width*3/8, 550);
   switch(mode) {
   case 0:
     text("Linear", width*5/8, 525);
