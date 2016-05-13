@@ -1,95 +1,3 @@
-class Thing {
-  PVector p;
-  PVector v;
-
-  Thing(float px, float py, float vx, float vy) {
-    p = new PVector(px, py);
-    v = new PVector(vx, vy);
-  }
-
-  void move() {
-    p = p.add(v);
-    if ( (p.x < 0) || (p.x > width) ) {
-      p.x = (p.x + width)%width;
-    }
-    if ( (p.y < 0) || (p.y > (height-100)) ) {
-      p.y = (p.y + (height-100))%(height-100);
-    }
-  }
-
-  void adjustLin(Thing[] stuff, float range) {
-    float n = 0;
-    float tx = 0;
-    float ty = 0;
-
-    for (int i=0; i!=stuff.length; ++i) {
-      if (dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y) < range) {
-        float f = map(dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y), 0, range, 1, 0);
-        tx += stuff[i].v.x * f;
-        ty += stuff[i].v.y * f;
-        n+=f;
-      }
-    }
-
-    v.set(tx/n, ty/n);
-  }
-
-  void adjustConst(Thing[] stuff, float range) {
-    float n = 0;
-    float tx = 0;
-    float ty = 0;
-
-    for (int i=0; i!=stuff.length; ++i) {
-      if (dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y) < range) {
-        tx += stuff[i].v.x;
-        ty += stuff[i].v.y;
-        ++n;
-      }
-    }
-
-    v.set(tx/n, ty/n);
-  }
-
-  void adjustSpi(Thing[] stuff, float range) {
-    float n = 0;
-    float tx = 0;
-    float ty = 0;
-
-    for (int i=0; i!=stuff.length; ++i) {
-      if (dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y) < range) {
-        float d = dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y);
-        float f = map(pow(d, 0.25), 0, pow(range, 0.25), 1, 0);
-        tx += stuff[i].v.x * f;
-        ty += stuff[i].v.y * f;
-        n+=f;
-      }
-    }
-
-    v.set(tx/n, ty/n);
-  }
-
-  void adjustRand(Thing[] stuff, float range) {
-    float n = 0;
-    float tx = 0;
-    float ty = 0;
-
-    for (int i=0; i!=stuff.length; ++i) {
-      if (dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y) < range) {
-        float f = random(1);
-        tx += stuff[i].v.x * f;
-        ty += stuff[i].v.y * f;
-        n+=f;
-      }
-    }
-
-    v.set(tx/n, ty/n);
-  }
-
-  void display() {
-    ellipse(p.x, p.y, 10, 10);
-  }
-}
-
 float r = 25;
 int mode = 0;
 int number = 200;
@@ -192,5 +100,98 @@ void reset(int Number) {
   things = new Thing[Number];
   for (int i=0; i!=things.length; ++i) {
     things[i] = new Thing(random(width), random((height-100)), random(-5, 5), random(-5, 5));
+  }
+}
+
+class Thing {
+  PVector p;
+  PVector v;
+
+  Thing(float px, float py, float vx, float vy) {
+    p = new PVector(px, py);
+    v = new PVector(vx, vy);
+  }
+
+  void move() {
+    p.x += v.x;
+    p.y += v.y;
+    if ( (p.x < 0) || (p.x > width) ) {
+      p.x = (p.x + width)%width;
+    }
+    if ( (p.y < 0) || (p.y > (height-100)) ) {
+      p.y = (p.y + (height-100))%(height-100);
+    }
+  }
+
+  void adjustLin(Thing[] stuff, float range) {
+    float n = 0;
+    float tx = 0;
+    float ty = 0;
+
+    for (int i=0; i!=stuff.length; ++i) {
+      if (dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y) < range) {
+        float f = map(dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y), 0, range, 1, 0);
+        tx += stuff[i].v.x * f;
+        ty += stuff[i].v.y * f;
+        n+=f;
+      }
+    }
+
+    v.set(tx/n, ty/n);
+  }
+
+  void adjustConst(Thing[] stuff, float range) {
+    float n = 0;
+    float tx = 0;
+    float ty = 0;
+
+    for (int i=0; i!=stuff.length; ++i) {
+      if (dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y) < range) {
+        tx += stuff[i].v.x;
+        ty += stuff[i].v.y;
+        ++n;
+      }
+    }
+
+    v.set(tx/n, ty/n);
+  }
+
+  void adjustSpi(Thing[] stuff, float range) {
+    float n = 0;
+    float tx = 0;
+    float ty = 0;
+
+    for (int i=0; i!=stuff.length; ++i) {
+      if (dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y) < range) {
+        float d = dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y);
+        float f = map(pow(d, 0.25), 0, pow(range, 0.25), 1, 0);
+        tx += stuff[i].v.x * f;
+        ty += stuff[i].v.y * f;
+        n+=f;
+      }
+    }
+
+    v.set(tx/n, ty/n);
+  }
+
+  void adjustRand(Thing[] stuff, float range) {
+    float n = 0;
+    float tx = 0;
+    float ty = 0;
+
+    for (int i=0; i!=stuff.length; ++i) {
+      if (dist(p.x, p.y, stuff[i].p.x, stuff[i].p.y) < range) {
+        float f = random(1);
+        tx += stuff[i].v.x * f;
+        ty += stuff[i].v.y * f;
+        n+=f;
+      }
+    }
+
+    v.set(tx/n, ty/n);
+  }
+
+  void display() {
+    ellipse(p.x, p.y, 10, 10);
   }
 }
