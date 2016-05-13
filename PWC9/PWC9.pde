@@ -114,11 +114,15 @@ class Thing {
 
   void move() {
     p = p.add(v);
-    if ((p.x < 0) || (p.x > width)) {
-      p.x = (p.x + width)%width;
+    if (p.x < 0) {
+      p.x += width;
+    } else if (p.x > width) {
+      p.x -= width;
     }
-    if ((p.y < 0) || (p.y > (height-100))) {
-      p.y = (p.y + (height-100))%(height-100);
+    if (p.y < 0) {
+      p.y += (height-100);
+    } else if (p.y > (height-100)) {
+      p.y -= (height-100);
     }
   }
 
