@@ -14,7 +14,7 @@ void draw() {
   fill(0, 255, 255, 64);
   background(0);
   for (int i=0; i!=things.length; ++i) {
-    switch(mode) {
+    /*switch(mode) {
     case 0:
       things[i].adjustLin(things, r);
       break;
@@ -27,7 +27,7 @@ void draw() {
     case 3:
       things[i].adjustRand(things, r);
       break;
-    }
+    }*/
     things[i].move();
     things[i].display();
   }
