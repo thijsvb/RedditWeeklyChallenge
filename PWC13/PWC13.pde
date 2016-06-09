@@ -1,4 +1,5 @@
 Cloud cloud;
+boolean cloudIsRainy = false;
 
 void setup() {
   size(1000, 500);
@@ -7,16 +8,19 @@ void setup() {
 
 void draw() {
   background(100, 192, 255);
-  
+  if (cloudIsRainy != cloud.rainy) {
+    cloud.toggleRainy();
+  }
+
   cloud.move();
   cloud.show();
 }
 
-void mousePressed(){
-  cloud.toggleRainy();
+void mousePressed() {
+  cloudIsRainy = !cloudIsRainy;
 }
 
-void keyPressed(){
+void keyPressed() {
   cloud = new Cloud(random(width), random(height), random(5));
 }
 
@@ -31,9 +35,9 @@ class Cloud {
     x = cx;
     y = cy;
     v = cv;
-    
-    for(int i=0; i!=rainMax; ++i){
-      rain[i] = new Rain(-10,0);
+
+    for (int i=0; i!=rainMax; ++i) {
+      rain[i] = new Rain(-10, 0);
     }
   }
 
@@ -49,7 +53,7 @@ class Cloud {
         rain[i].fall();
       }
 
-      for (int i=-100; i<100; i+=random(10, 20)) {
+      for (int i=-100+int(random(10)); i<100; i+=random(10, 20)) {
         rainIndex = (rainIndex+1)%rainMax;
         rain[rainIndex] = new Rain(x+i, y);
       }
@@ -59,7 +63,7 @@ class Cloud {
   void show() {
     if (rainy) {
       fill(150);
-      for(int i=0; i!=rainMax; ++i){
+      for (int i=0; i!=rainMax; ++i) {
         rain[i].show();
       }
     } else {
@@ -72,11 +76,11 @@ class Cloud {
     ellipse(x-30, y-40, 60, 60);
     ellipse(x-60, y-20, 50, 30);
   }
-  
-  void toggleRainy(){
+
+  void toggleRainy() {
     rainy = !rainy;
-    for(int i=0; i!=rainMax; ++i){
-      rain[i] = new Rain(-10,0);
+    for (int i=0; i!=rainMax; ++i) {
+      rain[i] = new Rain(-10, 0);
     }
   }
 }
@@ -88,15 +92,15 @@ class Rain {
   Rain(float X, float Y) {
     x = X;
     y = Y;
-    shade = color(random(128,192));
+    shade = color(random(128, 192));
   }
 
   void fall() {
     y+=5;
   }
-  
-  void show(){
+
+  void show() {
     stroke(shade);
-    line(x,y,x,y+50);
+    line(x, y, x, y+50);
   }
 }
