@@ -3,7 +3,7 @@ int num = 0;
 Orbit o;
 
 void setup() {
-  size(500, 500, P2D);
+  size(500, 500);
   translate(width/2, height/2);
 }
 
