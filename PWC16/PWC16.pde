@@ -41,7 +41,7 @@ class Orbit {
   color c;
 
   Orbit(float R, float A, float B, float ANG) {
-    assert(A > 0 && A <= 1 && B > 0 && B<= 1);
+    //assert(A > 0 && A <= 1 && B > 0 && B<= 1);          PJS doesn't like asserts D:
     r = R;
     ca = A;
     cb = B;
