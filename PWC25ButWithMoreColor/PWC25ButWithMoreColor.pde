@@ -12,7 +12,7 @@ void setup() {
 }
 
 void draw() {
-  background(128);
+  background(255);
 
   for (Spot s : spots) {
     s.move();
